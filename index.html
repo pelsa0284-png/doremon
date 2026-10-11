@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doraemon Friends Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body class="theme-sky">
+
+    <div class="theme-page" id="themePage">
+        <h1>💙 Doraemon Friends Quiz 💙</h1>
+        <p>Choose your favourite theme, Nobita!</p>
+
+        <div class="theme-options">
+            <button class="theme-btn" onclick="selectTheme('sky')">
+                ☁️ Sky Blue
+                <img src="images/sky.jpg" alt="Sky Blue theme">
+            </button>
+
+            <button class="theme-btn" onclick="selectTheme('pink')">
+                💗 Pink
+                <img src="images/pink.jpg" alt="Pink theme">
+            </button>
+
+            <button class="theme-btn" onclick="selectTheme('green')">
+                🌿 Green
+                <img src="images/green.jpg" alt="Green theme">
+            </button>
+
+            <button class="theme-btn" onclick="selectTheme('purple')">
+                💜 Purple
+                <img src="images/purple.jpg" alt="Purple theme">
+            </button>
+        </div>
+
+       
+        <button class="start-btn" onclick="startQuiz()">
+            Start Quiz ➜
+        </button>
+    </div>
+
+
+
+<div id="quizPage" hidden>
+    <h1>💙 Doraemon Friends Quiz 💙</h1>
+    <p>Let's check our friendship, Nobita!</p>
+
+    <h2 id="question"></h2>
+
+    <div class="answers">
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+    </div>
+
+    <p id="result"></p>
+    <p id="score"></p>
+    
+<div id="friendshipGreeting" hidden>
+    <h2 id="greetingTitle"></h2>
+    <p id="greetingMessage"></p>
+</div>
+
+
+
+
+    <button id="nextBtn" onclick="nextQuestion()" hidden>
+        Next Question ➜
+    </button>
+
+    <button onclick="goBack()">⬅ Back to Themes</button>
+</div>
+
+</body>
+</html>

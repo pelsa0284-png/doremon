@@ -1,3 +1,4 @@
+alert("JavaScript working!");
 let currentTheme = "sky";
 let currentQuestion = 0;
 let currentScore = 0;

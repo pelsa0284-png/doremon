@@ -76,5 +76,36 @@
     <button onclick="goBack()">⬅ Back to Themes</button>
 </div>
 
+<!-- SCORE PAGE -->
+<div id="scorePage" hidden>
+    <h1>🏆 Your Quiz Result 🏆</h1>
+    <h2 id="finalScore"></h2>
+    <p id="scoreMessage"></p>
+    <button onclick="showGreetingPage()">Continue 💌</button>
+</div>
+
+<!-- GREETING PAGE -->
+<div id="greetingPage" hidden>
+    <h1>💙 A Special Letter for You 💙</h1>
+    <p>Someone has a friendship message for you!</p>
+
+    <button id="envelopeBtn" onclick="openLetter()"
+        style="font-size:70px; background:none; border:none; cursor:pointer;">
+        💌
+    </button>
+
+    <p>Tap the letter to open it!</p>
+
+    <div id="letterContent" hidden>
+        <h2 id="letterTitle"></h2>
+        <p id="letterMessage"></p>
+        <p>With lots of friendship 💙</p>
+    </div>
+
+    <button onclick="goBack()">⬅ Play Again</button>
+</div>
+</body>
+</html>
+
 </body>
 </html>

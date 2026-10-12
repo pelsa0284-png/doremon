@@ -151,16 +151,18 @@ button:hover {
     margin: 20px 0;
 }
 
+
 .answers button {
     padding: 15px 10px;
     border: 2px solid #b9dafa;
     border-radius: 15px;
-    background: #eaf6ff;
+    background-color: #eaf6ff;
     color: #234b78;
     font-size: 16px;
     cursor: pointer;
     transition: 0.2s;
 }
+
 
 .answers button:hover:not(:disabled) {
     background: #c9e8ff;

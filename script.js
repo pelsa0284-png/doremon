@@ -1,4 +1,4 @@
-alert("JavaScript working!");
+
 let currentTheme = "sky";
 let currentQuestion = 0;
 let currentScore = 0;
@@ -211,55 +211,58 @@ function nextQuestion() {
 }
 
 // Final friendship result
+
 function showFinalResult() {
-    document.getElementById("question").textContent =
-        "💙 Your Friendship Result 💙";
+    document.getElementById("quizPage").hidden = true;
+    document.getElementById("scorePage").hidden = false;
 
-    document.querySelector(".answers").hidden = true;
+    document.getElementById("finalScore").textContent =
+        currentScore + " / " + questions.length;
 
-    const result = document.getElementById("result");
-    const greeting = document.getElementById("friendshipGreeting");
-    const greetingTitle = document.getElementById("greetingTitle");
-    const greetingMessage = document.getElementById("greetingMessage");
+    let message = "";
 
     if (currentScore === 10) {
-        result.textContent = "10/10 — Perfect Friendship! 🥰";
-        greetingTitle.textContent = "💙 Best Friends Forever! 💙";
-        greetingMessage.textContent =
-            "Doraemon and Nobita maadhiri namma friendship-um forever! 🫂";
-    } else if (currentScore === 9) {
-        result.textContent = "9/10 — Amazing Friendship! 🎉";
-        greetingTitle.textContent = "🌟 Super Bestie! 🌟";
-        greetingMessage.textContent =
-            "Oru answer miss aanaalum, friendship-la nee superstar! 💙";
-    } else if (currentScore === 8) {
-        result.textContent = "8/10 — Wonderful Friendship! 💖";
-        greetingTitle.textContent = "🤗 Amazing Friends! 🤗";
-        greetingMessage.textContent =
-            "Care, trust, support — idhu dhaan real friendship!";
+        message = "Perfect Friendship! 🥰 Best Friends Forever!";
+    } else if (currentScore >= 8) {
+        message = "Amazing Friendship! 💙 You are a super bestie!";
     } else if (currentScore >= 5) {
-        result.textContent = currentScore + "/10 — Great Try! 💙";
-        greetingTitle.textContent = "🌈 Friendship Forever! 🌈";
-        greetingMessage.textContent =
-            "Innum konjam try pannu, Nobita! Un friendship special!";
+        message = "Great Try! 🌈 Keep your friendship strong!";
     } else {
-        result.textContent = currentScore + "/10 — Keep Trying! 🌟";
-        greetingTitle.textContent = "🫶 Friends Always! 🫶";
-        greetingMessage.textContent =
-            "Score vida friendship mukkiyam! Try again, Nobita!";
+        message = "Friendship is more important than marks! 🫂";
     }
 
-    greeting.hidden = false;
-    document.getElementById("score").textContent = "Quiz Completed! 🎉";
-    document.getElementById("nextBtn").hidden = true;
+    document.getElementById("scoreMessage").textContent = message;
 }
 
+
 // Back to themes
+
 function goBack() {
     document.getElementById("quizPage").hidden = true;
+    document.getElementById("scorePage").hidden = true;
+    document.getElementById("greetingPage").hidden = true;
     document.getElementById("themePage").hidden = false;
+
+    document.getElementById("letterContent").hidden = true;
 
     currentQuestion = 0;
     currentScore = 0;
+    answered = false;
+
     document.querySelector(".answers").hidden = false;
+}
+
+function showGreetingPage() {
+    document.getElementById("scorePage").hidden = true;
+    document.getElementById("greetingPage").hidden = false;
+}
+
+function openLetter() {
+    document.getElementById("letterContent").hidden = false;
+
+    document.getElementById("letterTitle").textContent =
+        "💙 Best Friends Forever! 💙";
+
+    document.getElementById("letterMessage").textContent =
+        "Doraemon and Nobita maadhiri namma friendship-um forever! Always care, trust and support! 🫂";
 }

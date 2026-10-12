@@ -214,10 +214,10 @@ function startQuiz() {
     document.getElementById("quizPage").hidden = false;
 
     const backgrounds = {
-        sky: "images/blue dora.jpg",
-        pink: "images/pink dora.jpg",
-        green: "images/green dora.jpg",
-       purple: "images/purple dora.jpg"
+        sky: "blue dora.jpg",
+        pink: "pink dora.jpg",
+        green: "green dora.jpg",
+       purple: "purple dora.jpg"
        };
 
     const quizPage = document.getElementById("quizPage");

@@ -1,4 +1,3 @@
-```javascript
 let currentTheme = "sky";
 let currentQuestion = 0;
 let currentScore = 0;
@@ -261,4 +260,3 @@ function goBack() {
     currentScore = 0;
     document.querySelector(".answers").hidden = false;
 }
-```

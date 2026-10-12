@@ -1,50 +1,8 @@
-
+```javascript
 let currentTheme = "sky";
-
-function selectTheme(theme) {
-    currentTheme = theme;
-
-    document.body.classList.remove(
-        "theme-sky",
-        "theme-pink",
-        "theme-green",
-        "theme-purple"
-    );
-
-    document.body.classList.add("theme-" + theme);
-
-    document.querySelectorAll(".theme-btn").forEach(function(button) {
-        button.classList.remove("selected");
-    });
-
-    const selectedButton = document.querySelector(
-        '[onclick="selectTheme(\'' + theme + '\')"]'
-    );
-
-    if (selectedButton) {
-        selectedButton.classList.add("selected");
-    }
-
-    const themeNames = {
-        sky: "Sky Blue",
-        pink: "Pink",
-        green: "Green",
-        purple: "Purple"
-    };
-
-    document.getElementById("selectedMessage").textContent =
-        themeNames[theme] + " theme selected!";
-}
-
-function startQuiz() {
-    document.getElementById("themePage").hidden = true;
-    document.getElementById("quizPage").hidden = false;
-}
-
-function goBack() {
-    document.getElementById("quizPage").hidden = true;
-    document.getElementById("themePage").hidden = false;
-}
+let currentQuestion = 0;
+let currentScore = 0;
+let answered = false;
 
 const questions = [
     {
@@ -99,14 +57,80 @@ const questions = [
     }
 ];
 
-let currentQuestion = 0;
-let currentScore = 0;
-let answered = false;
+// Theme selection
+function selectTheme(theme) {
+    currentTheme = theme;
 
+    document.body.classList.remove(
+        "theme-sky",
+        "theme-pink",
+        "theme-green",
+        "theme-purple"
+    );
+
+    document.body.classList.add("theme-" + theme);
+
+    document.querySelectorAll(".theme-btn").forEach(button => {
+        button.classList.remove("selected");
+    });
+
+    const selectedButton = document.querySelector(
+        `[onclick="selectTheme('${theme}')"]`
+    );
+
+    if (selectedButton) {
+        selectedButton.classList.add("selected");
+    }
+
+    const message = document.getElementById("selectedMessage");
+
+    if (message) {
+        const names = {
+            sky: "Sky Blue",
+            pink: "Pink",
+            green: "Green",
+            purple: "Purple"
+        };
+
+        message.textContent = names[theme] + " theme selected!";
+    }
+}
+
+// Start quiz
+function startQuiz() {
+    document.getElementById("themePage").hidden = true;
+    document.getElementById("quizPage").hidden = false;
+
+    const backgrounds = {
+        sky: "blue dora.jpg",
+        pink: "pink dora.jpg",
+        green: "green dora.jpg",
+        purple: "purple dora.jpg"
+    };
+
+    const quizPage = document.getElementById("quizPage");
+
+    quizPage.style.backgroundImage =
+        `url("${backgrounds[currentTheme]}")`;
+    quizPage.style.backgroundSize = "cover";
+    quizPage.style.backgroundPosition = "center";
+    quizPage.style.backgroundRepeat = "no-repeat";
+
+    currentQuestion = 0;
+    currentScore = 0;
+
+    document.querySelector(".answers").hidden = false;
+    document.getElementById("friendshipGreeting").hidden = true;
+
+    showQuestion();
+}
+
+// Display question
 function showQuestion() {
     answered = false;
 
     const q = questions[currentQuestion];
+
     document.getElementById("question").textContent = q.question;
     document.getElementById("result").textContent = "";
     document.getElementById("score").textContent =
@@ -117,44 +141,64 @@ function showQuestion() {
     answerButtons.forEach((button, index) => {
         button.textContent = q.options[index];
         button.disabled = false;
-        button.style.background = "";
+        button.style.backgroundColor = "";
+        button.style.color = "";
+        button.style.borderColor = "";
         button.onclick = () => checkAnswer(index);
     });
 
     document.getElementById("nextBtn").hidden = true;
 }
 
+// Check answer and show colours
 function checkAnswer(answer) {
     if (answered) return;
 
     answered = true;
+
     const q = questions[currentQuestion];
     const result = document.getElementById("result");
+    const answerButtons = document.querySelectorAll(".answers button");
+
+    answerButtons.forEach((button, index) => {
+        button.disabled = true;
+
+        if (index === q.answer) {
+            // Correct answer: GREEN
+            button.style.backgroundColor = "#28a745";
+            button.style.color = "#ffffff";
+            button.style.borderColor = "#1e7e34";
+        } else if (index === answer) {
+            // Selected wrong answer: RED
+            button.style.backgroundColor = "#dc3545";
+            button.style.color = "#ffffff";
+            button.style.borderColor = "#b02a37";
+        }
+    });
 
     if (answer === q.answer) {
         currentScore++;
-        result.textContent = "🎉 Correct answer! Well done, Nobita!";
+        result.textContent = "🎉 Correct Answer! Well done, Nobita!";
         result.style.color = "green";
     } else {
         result.textContent =
-            "😊 Not quite! Correct answer: " + q.options[q.answer];
+            "❌ Wrong Answer! Correct answer: " + q.options[q.answer];
         result.style.color = "red";
     }
-
-    document.querySelectorAll(".answers button").forEach(button => {
-        button.disabled = true;
-    });
 
     document.getElementById("score").textContent =
         "Your Score: " + currentScore + " / " + questions.length;
 
-    document.getElementById("nextBtn").hidden = false;
-    document.getElementById("nextBtn").textContent =
+    const nextBtn = document.getElementById("nextBtn");
+
+    nextBtn.hidden = false;
+    nextBtn.textContent =
         currentQuestion === questions.length - 1
             ? "See My Result 💙"
             : "Next Question ➜";
 }
 
+// Next question
 function nextQuestion() {
     if (currentQuestion < questions.length - 1) {
         currentQuestion++;
@@ -164,7 +208,7 @@ function nextQuestion() {
     }
 }
 
-
+// Final friendship result
 function showFinalResult() {
     document.getElementById("question").textContent =
         "💙 Your Friendship Result 💙";
@@ -204,41 +248,17 @@ function showFinalResult() {
     }
 
     greeting.hidden = false;
-    document.getElementById("score").textContent =
-        "Quiz Completed! 🎉";
-
+    document.getElementById("score").textContent = "Quiz Completed! 🎉";
     document.getElementById("nextBtn").hidden = true;
 }
-function startQuiz() {
-    document.getElementById("themePage").hidden = true;
-    document.getElementById("quizPage").hidden = false;
 
-    const backgrounds = {
-        sky: "blue dora.jpg",
-        pink: "pink dora.jpg",
-        green: "green dora.jpg",
-       purple: "purple dora.jpg"
-       };
-
-    const quizPage = document.getElementById("quizPage");
-
-    quizPage.style.backgroundImage =
-        `url("${backgrounds[currentTheme]}")`;
-    quizPage.style.backgroundSize = "cover";
-    quizPage.style.backgroundPosition = "center";
-    quizPage.style.backgroundRepeat = "no-repeat";
-
-    currentQuestion = 0;
-    currentScore = 0;
-
-    document.querySelector(".answers").hidden = false;
-    document.getElementById("friendshipGreeting").hidden = true;
-
-    showQuestion();
-}
-
+// Back to themes
 function goBack() {
     document.getElementById("quizPage").hidden = true;
     document.getElementById("themePage").hidden = false;
-}
 
+    currentQuestion = 0;
+    currentScore = 0;
+    document.querySelector(".answers").hidden = false;
+}
+```

@@ -96,7 +96,7 @@ function selectTheme(theme) {
 }
 
 // Start quiz
-function startQuiz() {
+alert("JavaScript working!");
     document.getElementById("themePage").hidden = true;
     document.getElementById("quizPage").hidden = false;
 

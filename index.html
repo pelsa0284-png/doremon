@@ -5,14 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doraemon Friends Quiz</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css?v=15">
+    <script src="script.js?v=6" defer></script>
 </head>
 
 <body class="theme-sky">
 
     <div class="theme-page" id="themePage">
         <h1>💙 Doraemon Friends Quiz 💙</h1>
+      <p id="sharedQuizWelcome" class="shared-quiz-welcome" hidden></p>
       <p id="selectedMessage"></p>
 
         <div class="theme-options">
@@ -38,10 +39,44 @@
         </div>
 
        
-        <button class="start-btn" onclick="startQuiz()">
+        <button class="start-btn" onclick="showNamePage()">
+    Next ➜
+</button>
+    </div>
+
+<!-- NAME PAGE -->
+
+<div class="name-page" id="namePage" hidden>
+
+    <div class="name-image-card">
+        <div class="heart-decoration">💗 ✨ 💙</div>
+
+        <h1>Welcome, Bestie! 💙</h1>
+        <p class="name-question">What is your name?</p>
+        <p class="name-subtitle">
+            Let's start the quiz with your name!
+        </p>
+
+        <input
+            type="text"
+            id="playerName"
+            placeholder="✍️ Enter your name"
+            maxlength="30"
+        >
+
+        <button
+            class="start-btn name-start-btn"
+            onclick="continueToQuiz()"
+        >
             Start Quiz ➜
         </button>
+
+        <p class="friendship-text">
+            💕 Best Friends Forever! 💕
+        </p>
     </div>
+
+</div>
 
 
 
@@ -60,12 +95,6 @@
 
     <p id="result"></p>
     <p id="score"></p>
-    
-<div id="friendshipGreeting" hidden>
-    <h2 id="greetingTitle"></h2>
-    <p id="greetingMessage"></p>
-</div>
-
 
 
 
@@ -78,39 +107,99 @@
 
 <!-- SCORE PAGE -->
 <div id="scorePage" hidden>
-    <h1>🏆 Your Quiz Result 🏆</h1>
-    <h2 id="finalScore"></h2>
-    <p id="scoreMessage"></p>
-    <button onclick="showGreetingPage()">Continue 💌</button>
+    <div class="score-card">
+        <div class="score-card-decoration" aria-hidden="true">✨ 🏆 ✨</div>
+        <h1>🏆 Your Quiz Result 🏆</h1>
+        <h2 id="finalScore"></h2>
+        <p id="scoreMessage"></p>
+        <button type="button" onclick="showGreetingPage()">Continue <span aria-hidden="true">💌</span></button>
+    </div>
 </div>
+
 
 <!-- GREETING PAGE -->
 <div id="greetingPage" hidden>
-    <h1>💙 A Special Letter for You 💙</h1>
-    <p>Someone has a friendship message for you!</p>
+    <div class="greeting-card">
+        <div class="greeting-sparkles" aria-hidden="true">✦　💙　✦　💗　✦</div>
+        <p class="greeting-eyebrow">A LITTLE SURPRISE FOR YOU</p>
+        <h1>💙 A Special Letter for You 💙</h1>
+        <p class="greeting-intro">A little gift filled with a lot of friendship!</p>
 
-    <button id="envelopeBtn" onclick="openLetter()"
-        style="font-size:70px; background:none; border:none; cursor:pointer;">
-        💌
-    </button>
+        <button id="envelopeBtn" type="button" onclick="openLetter()"
+            aria-label="Open your surprise gift" aria-expanded="false">
+            <span class="gift-box" aria-hidden="true">
+                <span class="gift-lid"></span>
+                <span class="gift-body"></span>
+                <span class="gift-ribbon"></span>
+                <span class="gift-bow"></span>
+                <span class="gift-heart">💌</span>
+            </span>
+        </button>
 
-    <p>Tap the letter to open it!</p>
+        <p id="giftHint" aria-live="polite">Tap the gift to open your surprise!</p>
 
-    <div id="letterContent" hidden>
-        <h2 id="letterTitle"></h2>
-        <p id="letterMessage"></p>
-        <p>With lots of friendship 💙</p>
+        <div id="letterContent" aria-live="polite" hidden>
+            <p class="surprise-title">Surprise! A message just for you 💖</p>
+            <div class="friendship-paper">
+                <img src="gift.png"
+                     alt="Doraemon and friends standing with a gift cart and a blank friendship message board"
+                     class="friendship-card">
+                <p class="friendship-quote" id="friendshipQuote" aria-live="polite"></p>
+            </div>
+        </div>
+
+        <button class="play-again-btn" type="button" onclick="goBack()">↶ Play Again</button>
+        <button id="createQuizBtn" class="create-quiz-next-btn" type="button"
+            onclick="showCreateQuizPage()" hidden>
+            Next: Create a quiz for your friends ➜
+        </button>
     </div>
+</div>
 
-    <button onclick="goBack()">⬅ Play Again</button>
+<!-- CREATE OR TAKE A FRIEND QUIZ -->
+<div id="createQuizPage" hidden>
+    <div class="create-quiz-card">
+        <div class="create-quiz-view" id="quizBuilder">
+            <p class="create-quiz-eyebrow">YOUR TURN TO MAKE A SURPRISE</p>
+            <h1>Create a Quiz for Your Friends 💙</h1>
+            <p class="create-quiz-intro">Enter your friend's name to create 10 personalized questions. Edit the choices and mark the true answer for each one!</p>
+
+            <form id="friendQuizForm">
+                <label for="quizCreatorName">Your name (quiz creator)</label>
+                <input id="quizCreatorName" type="text" maxlength="30" placeholder="Enter your name" required>
+
+                <label for="quizFriendName">Friend's name (used in the questions)</label>
+                <input id="quizFriendName" type="text" maxlength="30" placeholder="For example, Kaviya" required>
+
+                <button id="generateFriendQuestionBtn" class="share-quiz-btn" type="button">🎲 Generate 10 questions</button>
+                <div id="friendQuizQuestions" class="friend-quiz-questions"></div>
+
+                <button class="share-quiz-btn" type="submit">Create &amp; Share Quiz 💌</button>
+            </form>
+            <div id="quizShareLinkPanel" class="quiz-share-link-panel" hidden>
+                <label for="quizShareLink">Your quiz link</label>
+                <div class="quiz-share-link-row">
+                    <input id="quizShareLink" type="text" readonly>
+                    <button id="copyQuizLinkBtn" class="share-quiz-btn" type="button">Copy link</button>
+                </div>
+                <p id="quizLinkHelp" class="quiz-link-help"></p>
+            </div>
+            <p id="quizShareStatus" class="quiz-share-status" aria-live="polite"></p>
+        </div>
+
+        <div class="create-quiz-view" id="friendChallenge" hidden>
+            <p class="create-quiz-eyebrow">A FRIENDSHIP QUIZ FOR YOU</p>
+            <h1 id="friendChallengeTitle"></h1>
+            <p id="friendChallengeProgress" class="friend-challenge-progress"></p>
+            <h2 id="friendChallengeQuestion"></h2>
+            <div id="friendChallengeChoices" class="friend-challenge-choices"></div>
+            <p id="friendChallengeResult" class="friend-challenge-result" aria-live="polite"></p>
+            <button id="friendChallengeNext" type="button" class="share-quiz-btn" hidden>Next question ➜</button>
+            <button type="button" class="share-quiz-btn" onclick="showCreateQuizPage()">Make your own quiz ✨</button>
+        </div>
+    </div>
 </div>
-    
-<div id="letterContent" hidden>
-    <img src="friendship-card.png"
-         alt="Best Friends Forever"
-         class="friendship-card">
-</div>
+
 
 </body>
 </html>
-
